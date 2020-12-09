@@ -16,5 +16,5 @@
 ##  db数据库   
 关键字：  
 task_id + "_state"：状态  
-task_id + "_path" : 客户端请求文件  
-task_id + "_target_file": 算法服务输出文件  
+task_id + "_task_file" : 客户端请求文件路径  
+task_id + "_target_file": 算法服务输出文件路径  

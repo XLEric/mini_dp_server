@@ -33,7 +33,7 @@ def get_task():
     file.save(path_file)
 
     db_.set("{}_state".format(task_id),"ready")
-    db_.set("{}_path".format(task_id),path_file)
+    db_.set("{}_task_file".format(task_id),path_file)
     resp = {
         "task_id":task_id,
         "pattern":pattern,
