@@ -71,7 +71,7 @@ def send_video_target_file():
 
     target_file_path = db_.get("{}_target_video_file".format(task_id))
 
-    print("target_video_path".format(target_file_path))
+    print("target_video_path: {}".format(target_file_path))
     return send_file(target_file_path)
 
 #任务完成返回文件 image
@@ -81,7 +81,7 @@ def send_image_target_file():
 
     target_file_path = db_.get("{}_target_image_file".format(task_id))
 
-    print("target_image_path".format(target_file_path))
+    print("target_image_path: {}".format(target_file_path))
     return send_file(target_file_path)
 
 if __name__ == "__main__":
