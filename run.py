@@ -8,12 +8,10 @@ import time
 import threading
 from threading import current_thread, Lock
 
-
 def run_one_process(command,process_id):
     print("command : {}, process_id : {}".format(command,process_id))
     os.system(command)
 if __name__ == "__main__":
-
     #--------------------------------------
     command_list = [
         "python ./dp_server.py 1>>log_server.txt",

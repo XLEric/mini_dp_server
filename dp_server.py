@@ -31,9 +31,10 @@ def get_task():
     # 文件写入磁盘
     path_file = './server_video/'+file_name
     file.save(path_file)
-
+    
     db_.set("{}_state".format(task_id),"ready")
     db_.set("{}_task_file".format(task_id),path_file)
+
     resp = {
         "task_id":task_id,
         "pattern":pattern,
@@ -53,12 +54,22 @@ def get_task_state():
 
     return Response(json.dumps(resp),  mimetype='application/json')
 
-#任务完成返回文件
-@app.route("/target_file", methods=['POST','GET'])
-def send_target_file():
+#任务完成返回文件 video
+@app.route("/target_video_file", methods=['POST','GET'])
+def send_video_target_file():
     task_id = request.form["task_id"]
 
-    target_file_path = db_.get("{}_target_file".format(task_id))
+    target_file_path = db_.get("{}_target_video_file".format(task_id))
+
+    print("target_file_path".format(target_file_path))
+    return send_file(target_file_path)
+
+#任务完成返回文件 image
+@app.route("/target_image_file", methods=['POST','GET'])
+def send_image_target_file():
+    task_id = request.form["task_id"]
+
+    target_file_path = db_.get("{}_target_image_file".format(task_id))
 
     print("target_file_path".format(target_file_path))
     return send_file(target_file_path)

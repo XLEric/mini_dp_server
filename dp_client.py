@@ -41,7 +41,7 @@ if __name__ == "__main__":
 
     request_url = host + port + "/task"
 
-    print("\n----->>>step1 ： start task\n")
+    print("\n----->>>step 1 ： start task\n")
     r = requests.post(request_url,data=data,files=files)
     msg = r.json()
 
@@ -49,7 +49,7 @@ if __name__ == "__main__":
         print(" {} : {}".format(k_,msg[k_]))
 
     #----------------------------------------------------- 步骤 2 查询任务状态
-    print("\n----->>>step2 ： get task state\n")
+    print("\n----->>>step 2 ： get task state\n")
     request_url = host + port + "/task_state"
     flag_break = False
     while True:
@@ -68,15 +68,29 @@ if __name__ == "__main__":
         if flag_break:
             break
 
-        #------------------------ 模仿 服务器完成算法
+    #------------------------------------------------------ 步骤 3 获取算法可视化结果 图像
+    print("\n----->>>step 3 ： get image_target_file \n")
+    request_url = host + port + "/target_image_file"
+    st_ = time.time()
+    r = requests.get(request_url, data={"task_id":task_id},timeout=600)
+    et_ = time.time()
 
+    if not os.path.exists('./target_image'):
+        os.mkdir('./target_image')
+    target_file = "./target_image/target_{}.jpg".format(task_id)
+    with open(target_file, 'wb') as file_:
+        print("save image target file ~")
+        file_.write(r.content)
 
+    img_ = cv2.imread(target_file)
+    cv2.namedWindow("image",0)
+    cv2.imshow("image",img_)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
-
-
-    #------------------------------------------------------ 步骤3 获取算法可视化结果
-    print("\n----->>>step3 ： get target_file \n")
-    request_url = host + port + "/target_file"
+    #------------------------------------------------------ 步骤 4 获取算法可视化结果 视频
+    print("\n----->>>step 4 ： get video_target_file \n")
+    request_url = host + port + "/target_video_file"
     st_ = time.time()
     r = requests.get(request_url, data={"task_id":task_id},timeout=600)
     et_ = time.time()
@@ -85,9 +99,9 @@ if __name__ == "__main__":
         os.mkdir('./target_video')
     target_file = "./target_video/target_{}.mp4".format(task_id)
     with open(target_file, 'wb') as file_:
-        print("save target file ~")
+        print("save video target file ~")
         file_.write(r.content)
 
-    #----------------------------------------------------- 步骤 4 本地显示结果文件 - 视频
-    print("\n----->>>step4 ： show target file \n")
+    #----------------------------------------------------- 步骤 5 本地显示结果文件 - 视频
+    print("\n----->>>step 5 ： show target file \n")
     show_video(target_file)
