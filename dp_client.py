@@ -29,9 +29,12 @@ if __name__ == "__main__":
     task_id = create_task_id()
     print("task_id",task_id)
 
-    file_path = "./video/NBA.mp4"
+    video_path = "./video/NBA.mp4"
+    image_path = "./image/test.jpg"
 
-    files = {"file": open(file_path, "rb")};
+    files = {"file_video": open(video_path, "rb"),
+        "file_image": open(image_path, "rb"),
+        };
     data = {'task_id': task_id,
         "pattern": "video",
         }
@@ -83,8 +86,8 @@ if __name__ == "__main__":
         file_.write(r.content)
 
     img_ = cv2.imread(target_file)
-    cv2.namedWindow("image",0)
-    cv2.imshow("image",img_)
+    cv2.namedWindow("target_image",0)
+    cv2.imshow("target_image",img_)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

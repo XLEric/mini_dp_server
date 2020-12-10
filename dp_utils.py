@@ -12,8 +12,8 @@ def show_video(path):
         ret, frame = video_.read()
 
         if ret:
-            cv2.namedWindow("target",0)
-            cv2.imshow("target",frame)
+            cv2.namedWindow("target_video",0)
+            cv2.imshow("target_video",frame)
             if cv2.waitKey(1) ==27:
                 break
         else:

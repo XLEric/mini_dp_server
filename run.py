@@ -21,7 +21,6 @@ if __name__ == "__main__":
     st_ = time.time()
     process_list = []
     for i in range(len(command_list)):
-        # print(video_list[i])
         t = threading.Thread(target=run_one_process, args=(command_list[i],i))
         process_list.append(t)
 

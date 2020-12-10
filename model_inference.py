@@ -14,8 +14,8 @@ def get_file_state(db):
     for f in db_list:
         if ('_state' in f[0]):
 
-            path_video = db_.get(f[0].replace("_state","_target_video_file"))
-            path_image = db_.get(f[0].replace("_state","_target_image_file"))
+            path_video = db_.get(f[0].replace("_state","_task_video_file"))
+            path_image = db_.get(f[0].replace("_state","_task_image_file"))
             task_id = f[0].replace("_state","")
             print("   --->>> {} : {}".format(f[0],f[1]))
             print("          task_id ： {} ，model process video: {}, image : {}".format(task_id,path_video,path_image))
@@ -41,8 +41,8 @@ if __name__ == "__main__":
             # step1: 模型 前向推断
             # step2: 保存模型输出文件（视频)
             # step3: 将输出文件路径(信息)回写 db数据库key： task_id + “_target_file”
-            db_.set("{}_target_video_file".format(task_id),"./server_video/NBA.mp4")
-            db_.set("{}_target_image_file".format(task_id),"./image/test.jpg")
+            db_.set("{}_target_video_file".format(task_id),task_video_path)
+            db_.set("{}_target_image_file".format(task_id),task_image_path)
             # step4：将输出文件路径回写 db数据库key：task_id + “_state” : "done"
             db_.set("{}_state".format(task_id),"done")
 

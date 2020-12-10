@@ -21,24 +21,34 @@ def get_task():
     global db_
     task_id = request.form["task_id"]
     pattern = request.form["pattern"]
-    file = request.files['file']
-    file_name = file.filename
-    print("   task_id : {}, pattern : {}, file_name : {}".format(task_id,pattern,file_name))
-
+    file_video = request.files['file_video']
+    file_image = request.files['file_image']
+    video_name = file_video.filename
+    image_name = file_image.filename
+    print("   task_id : {}, pattern : {}, video_name : {}, image_name : {}".format(task_id,pattern,video_name,image_name))
+    #
     if not os.path.exists('./server_video'):
         os.mkdir('./server_video')
+    # 视频文件写入磁盘
+    path_file = './server_video/'+video_name
+    file_video.save(path_file)
+    db_.set("{}_task_video_file".format(task_id),path_file)
 
-    # 文件写入磁盘
-    path_file = './server_video/'+file_name
-    file.save(path_file)
-    
+    if not os.path.exists('./server_image'):
+        os.mkdir('./server_image')
+    # 视频文件写入磁盘
+    path_file = './server_image/'+image_name
+    file_image.save(path_file)
+    db_.set("{}_task_image_file".format(task_id),path_file)
+
     db_.set("{}_state".format(task_id),"ready")
-    db_.set("{}_task_file".format(task_id),path_file)
+
 
     resp = {
         "task_id":task_id,
         "pattern":pattern,
-        "filename":file_name,
+        "video_name":video_name,
+        "image_name":image_name,
         "state": "ready" ,
         }
     return Response(json.dumps(resp),  mimetype='application/json')
@@ -61,7 +71,7 @@ def send_video_target_file():
 
     target_file_path = db_.get("{}_target_video_file".format(task_id))
 
-    print("target_file_path".format(target_file_path))
+    print("target_video_path".format(target_file_path))
     return send_file(target_file_path)
 
 #任务完成返回文件 image
@@ -71,7 +81,7 @@ def send_image_target_file():
 
     target_file_path = db_.get("{}_target_image_file".format(task_id))
 
-    print("target_file_path".format(target_file_path))
+    print("target_image_path".format(target_file_path))
     return send_file(target_file_path)
 
 if __name__ == "__main__":
