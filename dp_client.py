@@ -17,7 +17,7 @@ from dp_utils import *
 
 def create_task_id():
     d_ = []
-    for i in range(5):
+    for i in range(6):
         d_.append(chr(random.randint(97, 122)))
     d_ = "".join(d_)
     str_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime())
@@ -32,8 +32,10 @@ if __name__ == "__main__":
     video_path = "./video/NBA.mp4"
     image_path = "./image/test.jpg"
 
-    files = {"file_video": open(video_path, "rb"),
-        "file_image": open(image_path, "rb"),
+
+
+    files = {"task_video_file": open(video_path,'rb'),
+        "task_image_file": open(image_path,'rb'),
         };
     data = {'task_id': task_id,
         "pattern": "video",
